@@ -1,0 +1,63 @@
+---
+# This role is used to setup the Raspberry Pi for the PiStream project
+# Home streaming with Jellyfin and Moonlight for the Raspberry Pi 5
+# Utilizes a minimal Desktop environment with Openbox to start different streaming clients with minimal inputs required
+# Felix Nesbigall - 01.02.2025
+
+- name: Update the system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install essentials
+  apt:
+    pkg:
+      - git
+      - curl
+      - wget
+      - unzip
+      - btop
+      - vlan
+      - firefox-esr
+      - gnupg
+      - pulseaudio
+    state: present
+
+- name: Install desktop components
+  apt:
+    pkg:
+      - lightdm
+      - openbox
+      - rofi
+
+- name: Install Jellyfin client
+  command: 'version=$(curl --head https://github.com/jellyfin/jellyfin-media-player/releases/latest | tr -d "\r" | grep "^location" | sed "s/.*\/v//g") && wget "https://github.com/jellyfin/jellyfin-media-player/releases/download/v$version/jellyfin-media-player_$version-1_amd64-$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2).deb" -O ./jmp.deb && apt install ./jmp.deb && rm ./jmp.deb'
+
+- name: Add Moonlight-qt repository
+  command: curl -1sLf 'https://dl.cloudsmith.io/public/moonlight-game-streaming/moonlight-qt/setup.deb.sh' | distro=raspbian codename=$(lsb_release -cs) sudo -E bash
+
+- name: Install Moonlight-qt
+  apt:
+    name: moonlight-qt
+  state: present
+
+- name: Create default user without password
+  user:
+    name: "user"
+    shell: /bin/bash
+    password: "*"
+    createhome: yes
+
+- name: Add the user to the input group
+  user:
+    name: "user"
+    groups: input
+    append: yes
+
+- name: Copy menu script to the user's home directory
+  copy:
+    src: menu.sh
+    dest: /home/user/menu.sh
+    owner: user
+    group: user
+    mode: 0755
