@@ -20,13 +20,13 @@ while true; do
             SETTINGS_CHOICE=$(echo -e "Bluetooth\nNetwork\nShow Devices\nShell\nBack" | rofi -dmenu -p "Settings" -i)
             case "$SETTINGS_CHOICE" in
                 "Bluetooth")
-                    include ./bluetooth-settings.sh
+                    . ./bluetooth-settings.sh
                     ;;
                 "Network")
-                    include ./network-settings.sh
+                    . ./network-settings.sh
                     ;;
                 "Show Devices")
-                    include ./show-devices.sh
+                    . ./show-devices.sh
                     ;;
                 "Shell")
                     lxterminal
