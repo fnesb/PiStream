@@ -1,0 +1,4 @@
+---
+- hosts: pistream
+  roles:
+    - setup-pistream

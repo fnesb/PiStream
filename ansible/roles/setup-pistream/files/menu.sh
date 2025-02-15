@@ -8,25 +8,28 @@ while true; do
 
     case "$CHOICE" in
         "Movie Library")
-            echo "Movie Library"
+            jellyfin
             ;;
         "Stream Desktop")
-            echo "Stream Desktop"
+            moonlight-qt
             ;;
         "Browser")
-            echo "Browser"
+            firefox --start-fullscreen
             ;;
         "Settings")
-            SETTINGS_CHOICE=$(echo -e "Bluetooth\nNetwork\nShow Devices\nBack" | rofi -dmenu -p "Settings" -i)
+            SETTINGS_CHOICE=$(echo -e "Bluetooth\nNetwork\nShow Devices\nShell\nBack" | rofi -dmenu -p "Settings" -i)
             case "$SETTINGS_CHOICE" in
                 "Bluetooth")
-                    include bluetooth-settings.sh
+                    include ./bluetooth-settings.sh
                     ;;
                 "Network")
-                    include network-settings.sh
+                    include ./network-settings.sh
                     ;;
                 "Show Devices")
-                    include show-devices.sh
+                    include ./show-devices.sh
+                    ;;
+                "Shell")
+                    lxterminal
                     ;;
                 "Back")
                     ;;
@@ -36,4 +39,4 @@ while true; do
             echo "Shutdown"
             ;;
     esac
-    
+done    

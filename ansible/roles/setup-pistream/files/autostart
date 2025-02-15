@@ -1,0 +1,6 @@
+#!/bin/bash
+# Turn off power saving to ensure the screen stays on
+xset -dpms
+xset s off
+# Start the menu script
+bash ~/menu.sh &

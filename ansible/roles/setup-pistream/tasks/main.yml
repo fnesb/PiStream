@@ -21,25 +21,59 @@
       - firefox-esr
       - gnupg
       - pulseaudio
+      - flatpak
+      - apt-transport-https
+      - accountsservice
+      - lxterminal
     state: present
 
 - name: Install desktop components
   apt:
     pkg:
+      - xorg
       - lightdm
       - openbox
       - rofi
+      - libgles2-mesa
+      - libgles2-mesa-dev
+      - xorg-dev
 
-- name: Install Jellyfin client
-  command: 'version=$(curl --head https://github.com/jellyfin/jellyfin-media-player/releases/latest | tr -d "\r" | grep "^location" | sed "s/.*\/v//g") && wget "https://github.com/jellyfin/jellyfin-media-player/releases/download/v$version/jellyfin-media-player_$version-1_amd64-$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2).deb" -O ./jmp.deb && apt install ./jmp.deb && rm ./jmp.deb'
+- name: Add flatpak repository
+  command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Check if rebooted file exists
+  stat:
+    path: /home/user/.flatpak_rebooted
+  register: rebooted_file
+
+- name: reboot
+  reboot:
+    reboot_timeout: 300
+  when: not rebooted_file.stat.exists
+
+- name: touch rebooted file
+  file:
+    path: /home/user/.flatpak_rebooted
+    state: touch
+  when: not rebooted_file.stat.exists
+
+- name: Install Jellyfin
+  flatpak:
+    name: com.github.iwalton3.jellyfin-media-player
+    state: present
+
+- name: Download repo script
+  get_url:
+    url: https://dl.cloudsmith.io/public/moonlight-game-streaming/moonlight-qt/setup.deb.sh
+    dest: /tmp/setup.deb.sh
 
 - name: Add Moonlight-qt repository
-  command: curl -1sLf 'https://dl.cloudsmith.io/public/moonlight-game-streaming/moonlight-qt/setup.deb.sh' | distro=raspbian codename=$(lsb_release -cs) sudo -E bash
+  command: /bin/bash /tmp/setup.deb.sh
 
 - name: Install Moonlight-qt
   apt:
     name: moonlight-qt
-  state: present
+    state: present
 
 - name: Create default user without password
   user:
@@ -61,3 +95,71 @@
     owner: user
     group: user
     mode: 0755
+
+- name: autologin user in lightdm
+  copy:
+    src: files/lightdm.conf
+    dest: /etc/lightdm/lightdm.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: make openbox autostart directory
+  file:
+    path: /home/user/.config/openbox
+    state: directory
+
+- name: Copy openbox stuff
+  copy:
+    src: "{{ item }}"
+    dest: /home/user/.config/openbox/{{ item }}
+    owner: user
+    group: user
+    mode: 0755
+  with_items:
+    - autostart
+
+- name: Copy rc.xml from etc/xdg/openbox to user's home directory
+  copy:
+    src: /etc/xdg/openbox/rc.xml
+    dest: /home/user/.config/openbox/rc.xml
+    owner: user
+    group: user
+    mode: 0755
+
+- name: Copy scripts to the user's home directory
+  copy:
+    src: files/{{ item }}
+    dest: /home/user/{{ item }}
+    owner: user
+    group: user
+    mode: 0755
+  with_items:
+    - menu.sh
+    - network-settings.sh
+    - show-devices.sh
+    - bluetooth-settings.sh
+
+- name: Copy .xsession to the user's home directory
+  copy:
+    src: files/.xsession
+    dest: /home/user/.xsession
+    owner: user
+    group: user
+    mode: 0755
+
+- name: user should own it's own files
+  command: chown -R user:user /home/user
+
+- name: set graphical target as default
+  command: systemctl set-default graphical.target  
+
+- name: enable lightdm
+  systemd:
+    name: lightdm
+    state: stopped
+    enabled: yes
+
+- name: reboot
+  reboot:
+    reboot_timeout: 300
