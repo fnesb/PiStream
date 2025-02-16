@@ -130,6 +130,16 @@
     mode: 0755
     remote_src: yes
 
+- name: have openbox start windows maximized
+  lineinfile:
+    path: /home/user/.config/openbox/rc.xml 
+    line: |
+      <application class="*">
+        <maximized>yes</maximized>
+      </application>
+    insertafter: '<applications>'
+    state: present
+  
 - name: Copy scripts to the user's home directory
   copy:
     src: files/{{ item }}
