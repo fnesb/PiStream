@@ -17,11 +17,10 @@ cleanup() {
     log_message "bluetooth-settings.sh - cleanup(): Cleanup function called" $LINENO
     kill $update_device_list_pid || log_error "bluetooth-settings.sh - cleanup(): Failed to kill update_device_list_pid" $LINENO
     rm /tmp/bluetooth_devices
-    kill $bluetoothscan_on_pid || log_error "bluetooth-settings.sh - cleanup(): Failed to kill bluetoothscan_on_pid" $LINENO
+    kill $bluetoothscan_pid || log_error "bluetooth-settings.sh - cleanup(): Failed to kill bluetoothscan_pid" $LINENO
     notify-send "Bluetooth" "Scanning stopped."
-    kill $bluetoothscan_on_pid || log_error "bluetooth-settings.sh - cleanup(): Failed to kill bluetoothscan_on_pid" $LINENO
-    kill $bluetoothscan_off_pid || log_error "bluetooth-settings.sh - cleanup(): Failed to kill bluetoothscan_off_pid" $LINENO
-}
+    log_message "Scanning stopped." $LINENO
+    }
 
 
 # Trap errors
