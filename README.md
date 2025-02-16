@@ -38,8 +38,10 @@ ssh-keygen
     * Vom Hauptrechner eine SSH-Verbindung zum Raspberry Pi herstellen und Root-Zugriff einrichten
 ```
 ssh <voreingestellter_Nutzername>@<IP-Adresse des Pi>
-...
-sudo mkdir /root/.ssh && sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
+```
+```
+sudo mkdir /root/.ssh && \
+sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys &&\
 sudo chown -R root:root /root
 ```
 4. Ansible-Rolle ausführen
