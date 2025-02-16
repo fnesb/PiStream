@@ -1,7 +1,7 @@
 # PiStream
 
 ## Kurzbeschreibung
-PiStream ist ein System für Heim-Streaming ins Wohnzimmer für das Raspberry Pi 5. Dieses Repository stellt eine Ansible-Rolle bereit, die PiStream auf einem bereits vorhandenen Raspberry Pi OS installiert. PiStream, das auf einem Zusammenspiel von verschiedener Open Source Software basiert, ermöglicht die Nutzung des Firefox-Browsers, Game- bzw. Desktop-Streaming über [Moonlight](https://moonlight-stream.org/) und des [Jellyfin](https://jellyfin.org) Clients für die eigene Medienbibliothek direkt am Fernseher.
+PiStream ist ein System für Heim-Streaming ins Wohnzimmer für das Raspberry Pi 5. Dieses Repository stellt eine Ansible-Rolle bereit, die PiStream auf einem bereits vorhandenen Raspberry Pi OS installiert. PiStream, das auf einem Zusammenspiel von verschiedener Open Source Software basiert, ermöglicht die Nutzung des Chromium-Browsers, Game- bzw. Desktop-Streaming über [Moonlight](https://moonlight-stream.org/) und des [Jellyfin](https://jellyfin.org) Clients für die eigene Medienbibliothek direkt am Fernseher.
 
 ## Voraussetzungen
 
@@ -20,10 +20,8 @@ PiStream ist ein System für Heim-Streaming ins Wohnzimmer für das Raspberry Pi
 
 ## ToDo / Soon(tm):
 
-1. Jellyfin-Integration
-2. DRM-Funktionen (Widevine) für Netflix & co. über den Browser
-3. Auto-Updates
-4. Look & Feel
+1. Auto-Updates
+2. Look & Feel
 
 ## Disclaimer
 
