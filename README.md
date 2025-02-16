@@ -18,6 +18,39 @@ PiStream ist ein System für Heim-Streaming ins Wohnzimmer für das Raspberry Pi
 4. Plug-and-Play
 5. Automatische Installation mit Ansible
 
+## Setup
+
+1. Auf dem Hauptrechner ein SSH-Schlüsselpaar erzeugen
+```
+ssh-keygen
+```
+2. Raspberry Pi OS Lite (ohne Desktop) auf dem Raspberry Pi 5 installieren
+    * Raspberry Pi Imager herunterladen
+    * Öffentlichen Schlüssel für SSH voreinstellen (z.B. Inhalt von `~/.ssh/id_rsa.pub`)
+    * Nutzer-Konfiguration voreinstellen
+    * SD-Karte bespielen und ins Raspberry Pi einsetzen
+
+3. SSH für `root` konfigurieren
+    * Raspberry Pi mit dem Netzwerk verbinden und einschalten
+    * IP-Adresse des Raspberry Pi herausfinden
+        * Option 1: Bildschirm anschließen - Die IP-Adresse wird in der Login-Maske angezeigt
+        * Option 2: Im DHCP-Server nachschauen - Der Heimrouter weiß, welche Geräte sich im Netzwerk befinden
+    * Vom Hauptrechner eine SSH-Verbindung zum Raspberry Pi herstellen und Root-Zugriff einrichten
+```
+ssh <voreingestellter_Nutzername>@<IP-Adresse des Pi>
+...
+sudo mkdir /root/.ssh && sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
+sudo chown -R root:root /root
+```
+4. Ansible-Rolle ausführen
+    * Ansible auf dem Hauptrechner installieren, falls noch nicht geschehen: `sudo apt install ansible`
+    * Am Hauptrechner in das `ansible/`-Verzeichnis des Repositories wechseln
+    * Die in der Datei `inventory` hinterlegte IP-Adresse auf die des Pi setzen und speichern
+```
+ansible-playbook -i inventory playbook.yml
+```
+
+
 ## ToDo / Soon(tm):
 
 1. Auto-Updates
