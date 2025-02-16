@@ -18,7 +18,7 @@
       - unzip
       - btop
       - vlan
-      - firefox-esr
+      - chromium
       - gnupg
       - pulseaudio
       - flatpak
@@ -38,6 +38,7 @@
       - libgles2-mesa-dev
       - xorg-dev
       - dunst
+      - libnotify-bin
 
 - name: Add flatpak repository
   command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -127,6 +128,7 @@
     owner: user
     group: user
     mode: 0755
+    remote_src: yes
 
 - name: Copy scripts to the user's home directory
   copy:

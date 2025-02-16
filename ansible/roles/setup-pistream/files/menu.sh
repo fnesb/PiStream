@@ -14,7 +14,7 @@ while true; do
             moonlight-qt
             ;;
         "Browser")
-            firefox --start-fullscreen
+            chromium-browser -start-maximized
             ;;
         "Settings")
             SETTINGS_CHOICE=$(echo -e "Bluetooth\nNetwork\nShow Devices\nShell\nBack" | rofi -dmenu -p "Settings" -i)

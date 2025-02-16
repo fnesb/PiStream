@@ -2,5 +2,7 @@
 # Turn off power saving to ensure the screen stays on
 xset -dpms
 xset s off
+# Notifications
+dunst &
 # Start the menu script
 bash ~/menu.sh &
