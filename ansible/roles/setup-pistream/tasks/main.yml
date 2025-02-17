@@ -173,6 +173,17 @@
     state: stopped
     enabled: yes
 
+- name: chromium policy directory
+  file:
+    path: /etc/chromium/policies/managed
+    state: directory
+
+- name: disable chromium history
+  lineinfile:
+    path: /etc/chromium/policies/managed/custom_policy.json
+    line: {"SavingBrowserHistoryDisabled": true}
+    create: yes
+
 - name: reboot
   reboot:
     reboot_timeout: 300
