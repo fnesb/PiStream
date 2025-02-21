@@ -284,9 +284,10 @@
   copy:
     content: |
       {
-        "SavingBrowserHistoryDisabled": true
-        "SearchSuggestEnabled": false
-        "AutoFillEnabled": false
+        "SavingBrowserHistoryDisabled": true,
+        "SearchSuggestEnabled": false,
+        "AutoFillEnabled": false,
+        "RestoreOnStartup": 0
       }
     dest: /etc/chromium/policies/managed/custo2m_policy.json
     owner: root

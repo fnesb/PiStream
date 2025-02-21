@@ -7,6 +7,7 @@
 LOGFILE=~/pistream-menu.log
 CHROMIUM_DEFAULT_OPTS="--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
 MAIN_MENU="Browser\nNetflix\nDisney Plus\nAmazon Prime\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
+DELETE_THIS="~/.cache/chromium ~/.config/chromium/Default/Preferences ~/.config/chromium/Default/Shortcuts ~/.config/chromium/Default/Favicons ~/.config/chromium/Default/Network\ Action\ Predictor ~/.config/chromium/Default/Local\ Storage ~/.config/chromium/Default/Reporting\ and\ NEL ~/.config/chromium/Default/Network\ Persistent\ State ~/.config/chromium/Default/DIPS ~/.config/chromium/Default/IndexedDB ~/.config/chromium/Default/Session\ Storage ~/.config/chromium/ZxcvbnData/3 ~/.config/chromium/SignletonCookie ~/.config/chromium/segmentation_platform"
 
 # Functions
 
@@ -44,7 +45,11 @@ while true; do
 
     case "$CHOICE" in
         "Browser")
-            log_message "Youtube selected" $LINENO
+            log_message "Browser selected" $LINENO
+            log_message "Clearing cache..." $LINENO
+            log_message "rm -rf $DELETE_THIS" $LINENO
+            ERROR_OUTPUT=$(rm -rf $DELETE_THIS) || log_error "Failed to execute rm -rf ~/.cache/chromium: $ERROR_OUTPUT" $LINENO
+            log_message "Opening browser..." $LINENO
             ERROR_OUTPUT=$(chromium-browser https://www.youtube.com $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Netflix")
