@@ -159,15 +159,13 @@
   replace:
     path: /home/user/.themes/modernflatdark-master/openbox-3/themerc
     regexp: 'window\.active\.title\.bg\.color: #[0-9A-Fa-f]{6}'
-#    replace: 'window.titlebar.active.bg.color: #15171c'
-    replace: 'window.titlebar.active.bg.color: #171a1f'
-#    replace: 'window.titlebar.active.bg.color: #131519'
+    replace: 'window.titlebar.active.bg.color: #15171c'
 
-#- name: modify openbox theme - make title bar thinner
-#  replace:
-#    path: /home/user/.themes/modernflatdark-master/openbox-3/themerc
-#    regexp: 'padding\.height: [0-9]+'
-#    replace: 'padding.height: 2'
+- name: modify openbox theme - make title bar thinner
+  replace:
+    path: /home/user/.themes/modernflatdark-master/openbox-3/themerc
+    regexp: 'padding\.height: [0-9]+'
+    replace: 'padding.height: 0'
 
 - name: Copy menu script to the user's home directory
   copy:
