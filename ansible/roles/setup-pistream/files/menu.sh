@@ -4,10 +4,24 @@
 
 # Settings
 
-LOGFILE=~/pistream-menu.log
+LOGFILE=$HOME/pistream-menu.log
 CHROMIUM_DEFAULT_OPTS="--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
 MAIN_MENU="Browser\nNetflix\nDisney Plus\nAmazon Prime\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
-DELETE_THIS="~/.cache/chromium ~/.config/chromium/Default/Preferences ~/.config/chromium/Default/Shortcuts ~/.config/chromium/Default/Favicons ~/.config/chromium/Default/Network\ Action\ Predictor ~/.config/chromium/Default/Local\ Storage ~/.config/chromium/Default/Reporting\ and\ NEL ~/.config/chromium/Default/Network\ Persistent\ State ~/.config/chromium/Default/DIPS ~/.config/chromium/Default/IndexedDB ~/.config/chromium/Default/Session\ Storage ~/.config/chromium/ZxcvbnData/3 ~/.config/chromium/SignletonCookie ~/.config/chromium/segmentation_platform"
+DELETE_THIS=(
+    "$HOME/.cache/chromium" 
+    "$HOME/.config/chromium/Default/Shortcuts" 
+    "$HOME/.config/chromium/Default/Favicons" 
+    "$HOME/.config/chromium/Default/Network\ Action\ Predictor" 
+    "$HOME/.config/chromium/Default/Local\ Storage" 
+    "$HOME/.config/chromium/Default/Reporting\ and\ NEL" 
+    "$HOME/.config/chromium/Default/Network\ Persistent\ State" 
+    "$HOME/.config/chromium/Default/DIPS" 
+    "$HOME/.config/chromium/Default/IndexedDB" 
+    "$HOME/.config/chromium/Default/Session\ Storage" 
+    "$HOME/.config/chromium/segmentation_platform" 
+    "$HOME/.config/chromium/ZxcvbnData/3/ranked_dicts" 
+    "$HOME/.config/chromium/ZxcvbnData/3/us_tv_and_film.txt"
+)
 
 # Functions
 
@@ -47,8 +61,8 @@ while true; do
         "Browser")
             log_message "Browser selected" $LINENO
             log_message "Clearing cache..." $LINENO
-            log_message "rm -rf $DELETE_THIS" $LINENO
-            ERROR_OUTPUT=$(rm -rf $DELETE_THIS) || log_error "Failed to execute rm -rf ~/.cache/chromium: $ERROR_OUTPUT" $LINENO
+            log_message "rm -rf ${DELETE_THIS[@]}" $LINENO
+            rm -rf ${DELETE_THIS[@]} || log_error "Failed to execute rm -rf $HOME/.cache/chromium: $ERROR_OUTPUT" $LINENO
             log_message "Opening browser..." $LINENO
             ERROR_OUTPUT=$(chromium-browser https://www.youtube.com $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
