@@ -7,7 +7,7 @@
 LOGFILE=~/pistream-menu.log
 CHROMIUM_DEFAULT_OPTS=""
 #"--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
-MAIN_MENU="Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
+MAIN_MENU="Browser\nNetflix\nDisney Plus\nAmazon Prime\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
 
 # Functions
 
@@ -44,9 +44,9 @@ while true; do
     CHOICE=$(echo -e $MAIN_MENU | rofi -dmenu -i -lines $MENU_LINE -no-fixed-num-lines -p "PiStream")
 
     case "$CHOICE" in
-        "Youtube")
+        "Browser")
             log_message "Youtube selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser --app=https://www.youtube.com/tv --kiosk $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser --app=https://www.youtube.com/tv $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Netflix")
             log_message "Netflix selected" $LINENO
@@ -59,10 +59,6 @@ while true; do
         "Amazon Prime")
             log_message "Amazon Prime selected" $LINENO
             ERROR_OUTPUT=$(chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk) $CHROMIUM_DEFAULT_OPTS || log_error "Failed to execute chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk: $ERROR_OUTPUT" $LINENO
-            ;;
-        "Browser")
-            log_message "Browser selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser -start-maximized $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser -start-maximized: $ERROR_OUTPUT" $LINENO
             ;;
         "Desktop Streaming")
             log_message "Desktop Streaming selected" $LINENO
