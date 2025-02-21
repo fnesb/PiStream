@@ -37,7 +37,7 @@ c=0
 while true; do
     c=$((c+1))
     log_message "Main loop iteration $c" $LINENO
-    CHOICE=$(echo -e "Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown" | rofi -dmenu -p "PiStream" -i)
+    CHOICE=$(echo -e "Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown" | rofi -dmenu -i)
 
     case "$CHOICE" in
         "Youtube")
