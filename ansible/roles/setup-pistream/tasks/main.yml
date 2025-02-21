@@ -262,6 +262,7 @@
       {
         "SavingBrowserHistoryDisabled": true
         "OmniboxSuggestionsEnabled": false
+        "CrashRecoveryEnabled": false
       }
     dest: /etc/chromium/policies/managed/custo2m_policy.json
     owner: root
