@@ -256,11 +256,12 @@
     path: /etc/chromium/policies/managed
     state: directory
 
-- name: disable chromium history
+- name: configure chromium
   copy:
     content: |
       {
         "SavingBrowserHistoryDisabled": true
+        "OmniboxSuggestionsEnabled": false
       }
     dest: /etc/chromium/policies/managed/custo2m_policy.json
     owner: root
