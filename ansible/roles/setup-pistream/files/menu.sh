@@ -46,7 +46,7 @@ while true; do
     case "$CHOICE" in
         "Browser")
             log_message "Youtube selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser --app=https://www.youtube.com $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser https://www.youtube.com $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Netflix")
             log_message "Netflix selected" $LINENO
