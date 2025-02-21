@@ -41,7 +41,7 @@ MENU_LINES=$(echo -e $MAIN_MENU | wc -l)
 while true; do
     c=$((c+1))
     log_message "Main loop iteration $c" $LINENO
-    CHOICE=$(echo -e $MAIN_MENU | rofi -dmenu -i -lines $MENU_LINES)
+    CHOICE=$(echo -e $MAIN_MENU | rofi -dmenu -i -lines $MENU_LINE -no-fixed-num-lines -p "PiStream")
 
     case "$CHOICE" in
         "Youtube")
