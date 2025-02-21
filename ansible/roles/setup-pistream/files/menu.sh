@@ -5,8 +5,7 @@
 # Settings
 
 LOGFILE=~/pistream-menu.log
-CHROMIUM_DEFAULT_OPTS=""
-#"--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
+CHROMIUM_DEFAULT_OPTS="--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
 MAIN_MENU="Browser\nNetflix\nDisney Plus\nAmazon Prime\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
 
 # Functions
