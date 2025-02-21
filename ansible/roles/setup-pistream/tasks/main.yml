@@ -242,7 +242,7 @@
   replace:
     path: /home/user/.config/openbox/rc.xml
     regexp: '(<number>)4(</number>)'
-    replace: '\11\2'
+    replace: '\g<1>1\g<2>'
 
 - name: Copy scripts to the user's home directory
   copy:
