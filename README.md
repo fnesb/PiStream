@@ -52,6 +52,11 @@ sudo chown -R root:root /root
 ansible-playbook -i inventory playbook.yml
 ```
 
+## Appearance
+
+Das gewählte GTK-Theme für Chrome ist Kripton-v40. Damit das Playbook ohne Anpassung funktiniert, muss dieses unter dem Namen `Kripton-v40.tar.xz` im Ordner `ansible/roles/setup-pistream/files/themes` liegen.
+Auch das Openbox-Theme ModernFlatDark muss unter dem richtigen Namen `modernflatdar-master.zip` in diesem Ordner sein. 
+Um zu erreichen, dass Chromium die richtige Scroll-Leiste verwendet muss in `chrome://flags` die Option `Overlay Scrollbars` aktiviert werden.
 
 ## ToDo / Soon(tm):
 

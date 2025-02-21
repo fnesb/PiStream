@@ -5,6 +5,7 @@
 # Settings
 
 LOGFILE=~/pistream-menu.log
+CHROMIUM_DEFAULT_OPTS="--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
 
 # Functions
 
@@ -48,19 +49,19 @@ while true; do
             ;;
         "Netflix")
             log_message "Netflix selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser --app=https://www.netflix.com --kiosk) || log_error "Failed to execute chromium-browser --app=https://www.netflix.com --kiosk: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser --app=https://www.netflix.com --kiosk $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.netflix.com --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Disney Plus")
             log_message "Disney Plus selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser --app=https://www.disneyplus.com --kiosk) || log_error "Failed to execute chromium-browser --app=https://www.disneyplus.com --kiosk: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser --app=https://www.disneyplus.com --kiosk $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.disneyplus.com --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Amazon Prime")
             log_message "Amazon Prime selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk) || log_error "Failed to execute chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk) $CHROMIUM_DEFAULT_OPTS || log_error "Failed to execute chromium-browser --app=https://www.amazon.de/gp/video/storefront --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Browser")
             log_message "Browser selected" $LINENO
-            ERROR_OUTPUT=$(chromium-browser -start-maximized) || log_error "Failed to execute chromium-browser -start-maximized: $ERROR_OUTPUT" $LINENO
+            ERROR_OUTPUT=$(chromium-browser -start-maximized $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser -start-maximized: $ERROR_OUTPUT" $LINENO
             ;;
         "Settings")
             log_message "Settings selected" $LINENO

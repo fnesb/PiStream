@@ -90,6 +90,71 @@
     groups: input
     append: yes
 
+- name: copy gtk theme
+  copy:
+    src: files/themes/Kripton-v40.tar.xz
+    dest: /home/user/.themes/Kripton-v40.tar.xz
+    owner: user
+    group: user
+    mode: 0755
+
+- name: extract gtk theme
+  unarchive:
+    src: /home/user/.themes/Kripton-v40.tar.xz
+    dest: /home/user/.themes
+    remote_src: yes
+    owner: user
+    group: user
+    mode: 0755
+
+- name: remove the tar file
+  file:
+    path: /home/user/.themes/Kripton-v40.tar.xz
+    state: absent
+
+- name: create gtk settings dir
+  file:
+    path: /home/user/.config/gtk-3.0
+    state: directory
+
+- name: use the gtk theme
+  copy:
+    content: |
+      [Settings]
+      gtk-theme-name=Kripton-v40
+    dest: /home/user/.config/gtk-3.0/settings.ini
+    owner: user
+    group: user
+    mode: 0644
+
+- name: copy openbox theme
+  copy:
+    src: files/themes/modernflatdark-master.zip
+    dest: /home/user/.themes/modernflatdark-master.zip
+    owner: user
+    group: user
+    mode: 0755
+
+- name: extract openbox theme
+  unarchive:
+    src: /home/user/.themes/modernflatdark-master.zip
+    dest: /home/user/.themes
+    remote_src: yes
+    owner: user
+    group: user
+    mode: 0755
+
+- name: remove the zip file
+  file:
+    path: /home/user/.themes/modernflatdark-master.zip
+    state: absent
+
+- name: modify openbox theme 
+  replace:
+    path: /home/user/.themes/modernflatdark-master/openbox-3/themerc
+    regexp: 'window\.active\.button\.(unpressed|pressed|toggled|hover)\.image\.color: #[0-9A-Fa-f]{6}'
+    replace: 'window.active.button.\1.image.color: #D3D3D3'
+
 - name: Copy menu script to the user's home directory
   copy:
     src: menu.sh
@@ -139,6 +204,19 @@
       </application>
     insertafter: '<applications>'
     state: present
+
+- name: disable right click conext menu
+  lineinfile:
+    path: /home/user/.config/openbox/rc.xml
+    line: '    <menu>no</menu>'
+    insertafter: '<context name="Root">'
+    state: present
+
+- name: Change Openbox theme in rc.xml
+  ansible.builtin.replace:
+    path: /home/user/.config/openbox/rc.xml
+    regexp: '(<theme>[\s\S]*?<name>)(.*?)(</name>)'
+    replace: '\1modernflatdark-master\3'
   
 - name: Copy scripts to the user's home directory
   copy:
@@ -179,11 +257,16 @@
     state: directory
 
 - name: disable chromium history
-  lineinfile:
-    path: /etc/chromium/policies/managed/custom_policy.json
-    line: {"SavingBrowserHistoryDisabled": true}
-    create: yes
-
+  copy:
+    content: |
+      {
+        "SavingBrowserHistoryDisabled": true
+      }
+    dest: /etc/chromium/policies/managed/custo2m_policy.json
+    owner: root
+    group: root
+    mode: 0644
+      
 - name: reboot
   reboot:
     reboot_timeout: 300
