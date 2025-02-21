@@ -5,7 +5,8 @@
 # Settings
 
 LOGFILE=~/pistream-menu.log
-CHROMIUM_DEFAULT_OPTS="--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
+CHROMIUM_DEFAULT_OPTS=""
+#"--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
 
 # Functions
 
@@ -36,16 +37,12 @@ c=0
 while true; do
     c=$((c+1))
     log_message "Main loop iteration $c" $LINENO
-    CHOICE=$(echo -e "Movie Library\nDesktop Streaming\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nSettings\nShutdown" | rofi -dmenu -p "PiStream" -i)
+    CHOICE=$(echo -e "Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown" | rofi -dmenu -p "PiStream" -i)
 
     case "$CHOICE" in
-        "Movie Library")
-            log_message "Movie Library selected" $LINENO
-            ERROR_OUTPUT=$(flatpak run com.github.iwalton3.jellyfin-media-player --fullscreen --tv) || log_error "Failed to execute jellyfin: $ERROR_OUTPUT" $LINENO
-            ;;
-        "Desktop Streaming")
-            log_message "Desktop Streaming selected" $LINENO
-            ERROR_OUTPUT=$(moonlight-qt) || log_error "Failed to execute moonlight-qt: $ERROR_OUTPUT" $LINENO
+        "Youtube")
+            log_message "Youtube selected" $LINENO
+            ERROR_OUTPUT=$(chromium-browser --app=https://www.youtube.com/tv --kiosk $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser --app=https://www.youtube.com/tv --kiosk: $ERROR_OUTPUT" $LINENO
             ;;
         "Netflix")
             log_message "Netflix selected" $LINENO
@@ -62,6 +59,14 @@ while true; do
         "Browser")
             log_message "Browser selected" $LINENO
             ERROR_OUTPUT=$(chromium-browser -start-maximized $CHROMIUM_DEFAULT_OPTS) || log_error "Failed to execute chromium-browser -start-maximized: $ERROR_OUTPUT" $LINENO
+            ;;
+        "Desktop Streaming")
+            log_message "Desktop Streaming selected" $LINENO
+            ERROR_OUTPUT=$(moonlight-qt) || log_error "Failed to execute moonlight-qt: $ERROR_OUTPUT" $LINENO
+            ;;
+        "Movie Library")
+            log_message "Movie Library selected" $LINENO
+            ERROR_OUTPUT=$(flatpak run com.github.iwalton3.jellyfin-media-player --fullscreen --tv) || log_error "Failed to execute jellyfin: $ERROR_OUTPUT" $LINENO
             ;;
         "Settings")
             log_message "Settings selected" $LINENO
