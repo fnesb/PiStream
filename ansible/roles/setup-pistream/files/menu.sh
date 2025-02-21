@@ -7,6 +7,7 @@
 LOGFILE=~/pistream-menu.log
 CHROMIUM_DEFAULT_OPTS=""
 #"--enable-features=brotli-encoding,ScrollAnchorSerialization --disable-session-crashed-bubble --disable-infobars"
+MAIN_MENU="Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown"
 
 # Functions
 
@@ -34,10 +35,13 @@ trap 'log_error "" "$LINENO"; exit 1' ERR
 log_message "######## Starting menu.sh ########" $LINENO
 log_message "Entering main loop" $LINENO
 c=0
+
+
+MENU_LINES=$(echo -e $MAIN_MENU | wc -l)
 while true; do
     c=$((c+1))
     log_message "Main loop iteration $c" $LINENO
-    CHOICE=$(echo -e "Youtube\nNetflix\nDisney Plus\nAmazon Prime\nBrowser\nDesktop Streaming\nMovie Library\nSettings\nShutdown" | rofi -dmenu -i)
+    CHOICE=$(echo -e $MAIN_MENU | rofi -dmenu -i -lines $MENU_LINES)
 
     case "$CHOICE" in
         "Youtube")
